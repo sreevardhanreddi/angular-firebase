@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="container mx-auto">
+
+    <!-- Material form login -->
+    <form>
+      <p class="h4 text-center mb-4">Sign Up</p>
+
+      <!-- Material input email -->
+      <div class="md-form">
+        <i class="fa fa-envelope prefix grey-text"></i>
+        <input type="email" id="materialFormLoginEmailEx" class="form-control" #inputEmail>
+        <label for="materialFormLoginEmailEx">Your email</label>
+      </div>
+
+      <!-- Material input password -->
+      <div class="md-form">
+        <i class="fa fa-lock prefix grey-text"></i>
+        <input type="password" id="materialFormLoginPasswordEx" class="form-control" #inputPassword>
+        <label for="materialFormLoginPasswordEx">Your password</label>
+      </div>
+
+      <div class="text-center mt-4">
+        <button class="btn btn-default" type="submit" (click)="signUp(inputEmail.value,inputPassword.value)">Login</button>
+      </div>
+    </form>
+    <!-- Material form login -->
+
+
+  </div>
+
+</div>

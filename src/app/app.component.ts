@@ -1,10 +1,51 @@
-import { Component } from '@angular/core';
+import { FirebaseAuthService } from './shared/firebase-auth.service';
+import { FirebaseDataService } from './shared/firebase-data.service';
+import { Todos } from './shared/model/todo.model';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
+  items: string;
+
+  TodosList: Observable<Todos[]>;
+  itemsRef: AngularFireList<any>;
+
+  constructor(
+    private afd: AngularFireDatabase,
+    private fbds: FirebaseDataService,
+    private fbs: FirebaseAuthService
+  ) {
+    this.itemsRef = afd.list('/todos');
+
+    this.TodosList = this.itemsRef
+      .snapshotChanges()
+      .pipe(
+        map(changes =>
+          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+        )
+      );
+  }
+
+  ngOnInit() {}
+
+  display(): boolean {
+    return this.fbs.isSignedIn;
+  }
+
+  onAdd() {
+    this.fbds.addToList(this.items);
+  }
+
+  onRemove(key) {
+    console.log(key);
+    this.fbds.removeFromList(key);
+  }
 }

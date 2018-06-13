@@ -1,0 +1,53 @@
+<!--Navbar-->
+<nav class="navbar fixed-top navbar-expand-md navbar-dark primary-color scrolling-navbar">
+
+
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand" [routerLink]="">Todos</a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="basicExampleNav">
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'about'" [routerLinkActive]="'active'">About
+
+        </a>
+      </li>
+
+
+    </ul>
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngIf="!fbs.isAuthenticated()">
+        <a class="nav-link" [routerLink]="'signup'" [routerLinkActive]="'active'">Sign Up
+
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'signin'" [routerLinkActive]="'active'">Sign In
+
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="fbs.isAuthenticated()">
+        <a class="nav-link" [routerLink]=" " [routerLinkActive]="'active'" (click)="logOut()">Logout
+
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+<!--/.Navbar-->
+<div style="margin-bottom: 80px"></div>
