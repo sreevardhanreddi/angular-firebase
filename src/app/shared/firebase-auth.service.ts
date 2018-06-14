@@ -10,7 +10,7 @@ import * as firebase from 'firebase';
 export class FirebaseAuthService {
   constructor(private afAuth: AngularFireAuth, private router: Router) {}
 
-  public token: string;
+  public tokenfb: string = '';
   public isSignedIn = false;
   private currentUser: firebase.User;
 
@@ -22,34 +22,36 @@ export class FirebaseAuthService {
     this.afAuth.auth.signInWithEmailAndPassword(email, password).then(() => {
       this.router.navigate(['/']);
       this.isSignedIn = true;
-      console.log(this.isSignedIn);
+      console.log('login isSignedIn =>', this.isSignedIn);
       firebase
         .auth()
         .currentUser.getIdToken()
         .then((token: string) => {
-          this.token = token;
-          console.log('token ==>' + this.token);
+          this.tokenfb = token;
+          this.isSignedIn = true;
+          console.log('token ==>' + this.tokenfb);
+          console.log('token ==>' + this.tokenfb.length);
         });
     });
   }
   logout() {
-    this.token = null;
     this.afAuth.auth.signOut().then(() => {
+      this.tokenfb = null;
       this.router.navigate(['/home']);
+      this.isSignedIn = false;
     });
   }
 
   isLoggedIn() {
-    if (this.currentUser == null) {
-      // console.log(this.currentUser);
-      return false;
-    }
-    // console.log(this.currentUser);
-    return true;
+    console.log('isSignedIn loggedIn => ', this.isSignedIn);
+    return this.isSignedIn;
   }
 
-  isAuthenticated() {
-    console.log('isAuthenticated()', this.token != null);
-    return this.token != null;
+  isAuthenticated(): boolean {
+    // console.log('isAuthenticated()', this.tokenfb.length > 0);
+    // console.log('isAuthenticated token ', this.tokenfb);
+    // return this.tokenfb.length > 0;
+    console.log('isSignedIn =>', this.isSignedIn);
+    return this.isSignedIn;
   }
 }

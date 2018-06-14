@@ -27,17 +27,17 @@
     </ul>
     <!-- Links -->
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" *ngIf="!fbs.isAuthenticated()">
+      <li class="nav-item" *ngIf="!display()">
         <a class="nav-link" [routerLink]="'signup'" [routerLinkActive]="'active'">Sign Up
 
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!display()">
         <a class="nav-link" [routerLink]="'signin'" [routerLinkActive]="'active'">Sign In
 
         </a>
       </li>
-      <li class="nav-item" *ngIf="fbs.isAuthenticated()">
+      <li class="nav-item" *ngIf="display()">
         <a class="nav-link" [routerLink]=" " [routerLinkActive]="'active'" (click)="logOut()">Logout
 
         </a>
