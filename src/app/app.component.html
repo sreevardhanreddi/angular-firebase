@@ -27,7 +27,7 @@
 
 
           <br>
-          <ul class="list-group " *ngFor="let item of TodosList | async; let i = index">
+          <ul class="list-group" *ngFor="let item of TodosList | async">
             <li class="hoverable mb-1 list-group-item d-flex justify-content-between align-items-center">
               {{ item.name }}
               <br> {{ item.key }}

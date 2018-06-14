@@ -1,3 +1,4 @@
+import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseAuthService } from './shared/firebase-auth.service';
 import { FirebaseDataService } from './shared/firebase-data.service';
 import { Todos } from './shared/model/todo.model';
@@ -15,23 +16,28 @@ export class AppComponent implements OnInit {
   title = 'app';
   items: string;
 
-  TodosList: Observable<Todos[]>;
   itemsRef: AngularFireList<any>;
-
+  TodosList: Observable<Todos[]>;
+  userId: string;
   constructor(
     private afd: AngularFireDatabase,
     private fbds: FirebaseDataService,
-    private fbs: FirebaseAuthService
+    private fbs: FirebaseAuthService,
+    private afAuth: AngularFireAuth
   ) {
-    this.itemsRef = afd.list('/todos');
-
-    this.TodosList = this.itemsRef
-      .snapshotChanges()
-      .pipe(
-        map(changes =>
-          changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-        )
-      );
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.userId = user.uid;
+      }
+      this.itemsRef = this.afd.list(`/todos/${this.userId}/`);
+      this.TodosList = this.itemsRef
+        .snapshotChanges()
+        .pipe(
+          map(changes =>
+            changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+          )
+        );
+    });
   }
 
   ngOnInit() {}
