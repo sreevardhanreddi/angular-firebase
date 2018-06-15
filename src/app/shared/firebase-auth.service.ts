@@ -15,7 +15,15 @@ export class FirebaseAuthService {
   private currentUser: firebase.User;
 
   register(email: string, password: string) {
-    this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+    this.afAuth.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        this.router.navigate(['/signin']);
+      })
+      .catch(err => {
+        console.log(err);
+        throw err;
+      });
   }
 
   login(email: string, password: string) {
