@@ -1,3 +1,15 @@
+# A Simple Todo App based on Angular and Firebase
+
+A Todo App with Login and Logout functionality.
+
+Uses Firebase's Real Time Database and angularfire2 a library for angular and firebase which synchronizes data in real time
+
+Users should Sign up for the first time and then sign in later.
+
+Users can add and delete todo's, which is stored in the database.
+
+They can sign in and View their todos later.
+
 # Angularfire2Todos
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
